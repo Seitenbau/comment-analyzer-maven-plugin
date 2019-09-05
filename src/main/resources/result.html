@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Technical Debt - Result</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/default.min.css">
+  <!--<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script></head>
+<body>
+
+<style>
+  pre {
+    height: 400px;
+    overflow-y: scroll;
+  }
+
+  .prettyprint {
+    background-color: white;
+  }
+
+
+
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .card-panel {
+    text-align: center !important;
+  }
+
+  .btn {
+    float: right;
+  }
+</style>
+
+
+{debtList}
+
+<script type="text/javascript">
+  function showHide(elem)
+  {
+    //var elem = document.getElementById("hideShow");
+    //var codeStyle = document.querySelector(".code");
+    console.log(elem);
+
+    var code = elem.currentTarget.parentNode.parentNode.querySelector(".java");
+    code.className = "java show";
+
+
+
+
+    if (elem.target.innerText == "SHOW")
+    {
+
+      code.className = "java show";
+      elem.target.innerText = "HIDE";
+
+
+      //codeStyle.style.display = "block";
+    } else
+    {
+      elem.target.innerText = "SHOW";
+      code.className = "java hide";
+      //codeStyle.style.display = "none";
+    }
+  }
+
+/*
+
+  document.addEventListener('DOMContentLoaded', (event) = > {
+    document.querySelectorAll('pre code').forEach((block) = > {
+      hljs.highlightBlock(block);
+  })
+  ;
+  })
+  ;
+
+
+*/
+</script>
+</body>
+</html>
