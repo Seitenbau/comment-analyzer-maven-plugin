@@ -1,4 +1,4 @@
-package com.seitenbau.commentanalyzer;
+package com.seitenbau.commentanalyzer.model;
 
 import java.util.ArrayList;
 import java.util.List;
