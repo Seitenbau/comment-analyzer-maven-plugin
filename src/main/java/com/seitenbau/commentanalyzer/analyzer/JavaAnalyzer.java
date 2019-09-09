@@ -149,7 +149,7 @@ public class JavaAnalyzer implements AnalyzerBase
   }
 
   @Override
-  public String getFileEnding()
+  public String getFileExtension()
   {
     return ".java";
   }

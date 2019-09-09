@@ -26,7 +26,7 @@ import lombok.Getter;
  * The plugin will generate an overview with related code areas.
  */
 @Mojo(name = "check", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
-public class CommentAnalyzer extends AbstractMojo
+public final class CommentAnalyzer extends AbstractMojo
 {
 
   @Getter
@@ -39,20 +39,20 @@ public class CommentAnalyzer extends AbstractMojo
   @Parameter(property = "commentanalyzer.htmlResultPath", defaultValue = "generated.html")
   private String htmlResultPath;
 
-  private Map<String, AnalyzerBase> analyzerMap = new HashMap<>();
-
   /**
    * Method called by the maven check goal during the "generate resources" lifecycle phase.
    */
   @Override
   public void execute()
   {
+    Map<String, AnalyzerBase> analyzerMap = new HashMap<>();
+
     Reflection.getAnalyzerClasses().forEach(aClass ->
     {
       try
       {
-        AnalyzerBase base  = (AnalyzerBase) aClass.newInstance();
-        analyzerMap.put(base.getFileEnding(), base);
+        AnalyzerBase base = (AnalyzerBase) aClass.newInstance();
+        analyzerMap.put(base.getFileExtension(), base);
       }
       catch (InstantiationException e)
       {
@@ -70,7 +70,7 @@ public class CommentAnalyzer extends AbstractMojo
     {
       try
       {
-        String fileEnding = "."+FilenameUtils.getExtension(file.getName());
+        String fileEnding = "." + FilenameUtils.getExtension(file.getName());
         List<CommentInfo> result = analyzerMap.get(fileEnding).scanFile(file, checkTag);
         commentList.addAll(result);
       }
@@ -91,8 +91,9 @@ public class CommentAnalyzer extends AbstractMojo
   }
 
   /**
-   * loops through directory and return all .java files
-   * @return list with all .java files
+   * loops through directory and return all files
+   *
+   * @return list with all files
    */
   private List<File> getAllJavaFiles(File dir)
   {
@@ -103,7 +104,7 @@ public class CommentAnalyzer extends AbstractMojo
       {
         list.addAll(getAllJavaFiles(file));
       }
-      else if (file.isFile() && file.getName().endsWith(".java"))
+      else if (file.isFile())
       {
         list.add(file);
       }
