@@ -2,6 +2,6 @@
 
 parameters / configuration
 * checkTag -> tag for scanning comments in files (default=DEBT)
-* dirToCheck -> directory to scanning all .java files (default=./)
-* htmlResultPath -> configure path for html with result (default=./generated.html)
+* dirToCheck -> directory for scanning files (default=./)
+* htmlResultPath -> configure path for generated html showing related code areas (default=./generated.html)
 
