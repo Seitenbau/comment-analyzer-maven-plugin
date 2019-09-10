@@ -118,7 +118,7 @@
                         <execution>
                             <id>mojo-descriptor</id>
                             <goals>
-                                <goal></goal>
+                                <goal>descriptor</goal>
                             </goals>
                         </execution>
                     </executions>
