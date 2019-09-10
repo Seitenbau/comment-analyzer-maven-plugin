@@ -1,3 +1,23 @@
+/*-
+ * -\-\-
+ * com.github.seitenbau:comment-analyzer-maven-plugin
+ * --
+ * Copyright (C) 2019 SEITENBAU GmbH
+ * --
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * -/-/-
+ */
+
 package com.seitenbau.commentanalyzer.analyzer;
 
 import java.io.File;
@@ -22,10 +42,10 @@ public class JavaAnalyzer implements AnalyzerBase
   private String checkTag;
 
   /**
-   *
    * Scan the given file for {@link #checkTag} with a java parser in two steps
    * 1. scan class by {@link #checkClass(CompilationUnit, String)} Method
    * 2. scan trough all methods of class with {@link #scanMethod(MethodDeclaration)}
+   *
    * @param file
    * @throws IOException
    */
@@ -43,18 +63,20 @@ public class JavaAnalyzer implements AnalyzerBase
 
     CommentInfo commentInfo = checkClass(compilationUnit, classPath);
 
-    if(commentInfo.isFound())
+    if (commentInfo.isFound())
+    {
       commentList.add(commentInfo);
+    }
 
     commentList.addAll(loopMethods(compilationUnit, classPath, commentInfo));
 
     return commentList;
   }
 
-
   /**
    * If the comments of the class contain the {@łink #checkTag}, {@link CommentInfo} will be created and added to param
    * commentList
+   *
    * @param compilationUnit
    * @param classPath
    * @return
@@ -116,6 +138,7 @@ public class JavaAnalyzer implements AnalyzerBase
 
   /**
    * The methods java doc and all comments inside the method will be check for the {@link #checkTag}
+   *
    * @param methodDeclaration
    * @return
    */
