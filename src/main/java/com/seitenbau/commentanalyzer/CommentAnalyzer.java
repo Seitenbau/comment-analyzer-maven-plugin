@@ -91,8 +91,11 @@ public final class CommentAnalyzer extends AbstractMojo
       try
       {
         String fileEnding = "." + FilenameUtils.getExtension(file.getName());
-        List<CommentInfo> result = analyzerMap.get(fileEnding).scanFile(file, checkTag);
-        commentList.addAll(result);
+
+        if(analyzerMap.containsKey(fileEnding)) {
+          List<CommentInfo> result = analyzerMap.get(fileEnding).scanFile(file, checkTag);
+          commentList.addAll(result);
+        }
       }
       catch (IOException e)
       {
