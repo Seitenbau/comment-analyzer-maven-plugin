@@ -6,7 +6,7 @@ before_install:
 after_success:
 - echo "<settings><servers><server><id>ossrh</id><username>\${env.OSSRH_USER}</username><password>\${env.OSSRH_PASS}</password></server></servers><profiles><profile><id>sonatype-oss-release</id><properties><gpg.keyname>E22CF6BD97DF7042</gpg.keyname><gpg.passphrase>\${env.KEY_PASSPHRASE}</gpg.passphrase><gpg.secretKeyring>all.gpg</gpg.secretKeyring></properties></profile></profiles></settings>" > ~/settings.xml
 - cat ~/settings.xml
-- mvn deploy -Dgpg.passphrase=${env.KEY_PASSPHRASE} -Prelease --settings ~/settings.xml
+- mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ~/settings.xml
 
 cache:
   directories:
