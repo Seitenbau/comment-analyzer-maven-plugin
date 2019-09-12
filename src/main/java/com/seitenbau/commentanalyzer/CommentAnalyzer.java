@@ -48,6 +48,8 @@ import lombok.Getter;
 @Mojo(name = "check", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public final class CommentAnalyzer extends AbstractMojo
 {
+  @Getter
+  private static CommentAnalyzer instance;
 
   @Getter
   @Parameter(property = "commentanalyzer.checkTag", defaultValue = "DEBT")
@@ -65,6 +67,7 @@ public final class CommentAnalyzer extends AbstractMojo
   @Override
   public void execute()
   {
+    this.instance = this;
     Map<String, AnalyzerBase> analyzerMap = new HashMap<>();
 
     Reflection.getAnalyzerClasses().forEach(aClass ->

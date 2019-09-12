@@ -71,7 +71,7 @@ public class HtmlGenerator
     url = new CommentAnalyzer().getClass().getClassLoader().getResource("snipped.html");
     String snipped = IOUtils.toString(url, StandardCharsets.UTF_8);
 
-    System.out.println(commentList.size() + " comments found by tag " + checkTag);
+    CommentAnalyzer.getInstance().getLog().info(commentList.size() + " comments found by tag " + checkTag);
 
     if (!commentList.isEmpty())
     {

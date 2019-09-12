@@ -33,6 +33,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.comments.JavadocComment;
+import com.seitenbau.commentanalyzer.CommentAnalyzer;
 import com.seitenbau.commentanalyzer.model.CommentInfo;
 
 @Analyzer
@@ -56,7 +57,7 @@ public class JavaAnalyzer implements AnalyzerBase
 
     List<CommentInfo> commentList = new ArrayList<>();
 
-    System.out.println("Scanning File: " + file.getName());
+    CommentAnalyzer.getInstance().getLog().debug("Scanning File: " + file.getName());
     CompilationUnit compilationUnit = StaticJavaParser.parse(FileUtils.readFileToString(file, "UTF-8"));
 
     String classPath = compilationUnit.getPackageDeclaration().get().getName() + "." + file.getName();
