@@ -6,7 +6,7 @@
 * dirToCheck -> directory for scanning files (default=./)
 * htmlResultPath -> configure path for generated html showing related code areas (default=./generated.html)
 
-##create own analyzer for another filetype:
+## create own analyzer for another filetype:
 
 * implement AnalyzerBase
 * use @Analyzer as annotation
@@ -15,7 +15,7 @@
 
 
 
-##Usage:
+## usage:
 ```
       <plugin>
         <groupId>com.github.seitenbau</groupId>
