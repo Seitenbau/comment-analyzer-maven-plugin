@@ -1,12 +1,12 @@
 
 
-## parameters / configuration
+## Parameters / configuration
 
 * checkTag -> tag for scanning comments in files (default=DEBT)
 * dirToCheck -> directory for scanning files (default=./)
 * htmlResultPath -> configure path for generated html showing related code areas (default=./generated.html)
 
-##create own analyzer for another filetype:
+## Create own analyzer for another filetype:
 
 * implement AnalyzerBase
 * use @Analyzer as annotation
@@ -15,7 +15,7 @@
 
 
 
-##Usage:
+## Usage:
 ```
       <plugin>
         <groupId>com.github.seitenbau</groupId>
