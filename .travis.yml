@@ -7,7 +7,7 @@ before_install:
 - cat ~/settings.xml
 stages:
   - name: build
-    if: type = push AND tag NOT present
+    if: tag NOT present
   - name: deploy
     if: tag IS present
 jobs:
