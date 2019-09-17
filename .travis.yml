@@ -19,8 +19,6 @@ jobs:
       script:
       - mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ~/settings.xml
     - stage: build
-      script:
-      - mvn clean install --settings ~/settings.xml
 cache:
   directories:
     - $HOME/.m2/repository/
