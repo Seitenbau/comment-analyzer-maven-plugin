@@ -8,11 +8,11 @@ before_install:
 stages:
   - name: build
     if: type = push AND tag NOT present
-  - name: mvn_central_deploy
+  - name: deploy
     if: tag IS present
 jobs:
   include:
-    - stage: mvn_central_deploy
+    - stage: deploy
       after_success:
       - mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ~/settings.xml
     - stage: build
