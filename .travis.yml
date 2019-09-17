@@ -11,11 +11,16 @@ before_install:
 stages:
   - name: release
     if: tag IS present
+  - name: build
+    if: type = push
 jobs:
   include:
     - stage: release
       script:
       - mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ~/settings.xml
+    - stage: build
+      script:
+      - mvn clean install --settings ~/settings.xml
 cache:
   directories:
     - $HOME/.m2/repository/
