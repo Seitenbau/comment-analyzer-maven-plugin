@@ -13,7 +13,7 @@ stages:
 jobs:
   include:
     - stage: ${TRAVIS_TAG}
-      script:
+      after_success:
       - mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ~/settings.xml
     - stage: build
 cache:
