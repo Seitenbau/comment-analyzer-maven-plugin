@@ -5,6 +5,8 @@
 * checkTag -> tag for scanning comments in files (default=DEBT)
 * dirToCheck -> directory for scanning files (default=./)
 * htmlResultPath -> configure path for generated html showing related code areas (default=./generated.html)
+* excludes -> skipping files by regex
+
 
 ## Create own analyzer for another filetype:
 
@@ -21,6 +23,14 @@
         <groupId>com.github.seitenbau</groupId>
         <artifactId>comment-analyzer-maven-plugin</artifactId>
         <version>${project.version}</version>
+        <configuration>
+            <dirToCheck>./</dirToCheck>
+            <htmlResultPath>generated.html</htmlResultPath>
+            <checkTag>DEBT</checkTag>
+            <excludes>
+                <exclude>.*.Test.*.java</exclude>
+            </excludes>
+        </configuration>
         <executions>
           <execution>
             <goals>
