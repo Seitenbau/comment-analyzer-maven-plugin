@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,12 +21,16 @@
 package com.seitenbau.commentanalyzer;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.AbstractMojo;
@@ -61,6 +65,11 @@ public final class CommentAnalyzer extends AbstractMojo
   @Parameter(property = "commentanalyzer.htmlResultPath", defaultValue = "generated.html")
   private String htmlResultPath;
 
+  @Parameter(property = "exclude")
+  private String[] excludes;
+
+  private Map<String, AnalyzerBase> analyzerMap = new HashMap<>();
+
   /**
    * Method called by the maven check goal during the "generate resources" lifecycle phase.
    */
@@ -68,7 +77,6 @@ public final class CommentAnalyzer extends AbstractMojo
   public void execute()
   {
     this.instance = this;
-    Map<String, AnalyzerBase> analyzerMap = new HashMap<>();
 
     Reflection.getAnalyzerClasses().forEach(aClass ->
     {
@@ -89,22 +97,27 @@ public final class CommentAnalyzer extends AbstractMojo
 
     List<CommentInfo> commentList = new ArrayList<>();
 
-    for (File file : getAllJavaFiles(new File(dirToCheck)))
+    List<File> fileList = getAllFiles(new File(dirToCheck));
+
+    List<File> newFileList = excludeFiles(fileList);
+
+    fileList.removeAll(newFileList);
+    fileList.forEach(file -> getLog().debug("skipping " + file.getName()));
+
+    newFileList.forEach(file ->
     {
       try
       {
         String fileEnding = "." + FilenameUtils.getExtension(file.getName());
 
-        if(analyzerMap.containsKey(fileEnding)) {
-          List<CommentInfo> result = analyzerMap.get(fileEnding).scanFile(file, checkTag);
-          commentList.addAll(result);
-        }
+        List<CommentInfo> result = analyzerMap.get(fileEnding).scanFile(file, checkTag);
+        commentList.addAll(result);
       }
       catch (IOException e)
       {
         e.printStackTrace();
       }
-    }
+    });
 
     try
     {
@@ -121,14 +134,21 @@ public final class CommentAnalyzer extends AbstractMojo
    *
    * @return list with all files
    */
-  private List<File> getAllJavaFiles(File dir)
+  private List<File> getAllFiles(File dir)
   {
     List<File> list = new ArrayList<>();
-    Arrays.stream(dir.listFiles()).forEach(file ->
+
+    File[] array = dir.listFiles(file ->
+    {
+      String fileEnding = "." + FilenameUtils.getExtension(file.getName());
+      return analyzerMap.containsKey(fileEnding) || file.isDirectory();
+    });
+
+    Arrays.stream(array).forEach(file ->
     {
       if (file.isDirectory())
       {
-        list.addAll(getAllJavaFiles(file));
+        list.addAll(getAllFiles(file));
       }
       else if (file.isFile())
       {
@@ -136,5 +156,19 @@ public final class CommentAnalyzer extends AbstractMojo
       }
     });
     return list;
+  }
+
+  public List<File> excludeFiles(List<File> files)
+  {
+    List<File> result = new ArrayList<>();
+
+    Arrays.asList(this.excludes).forEach(regex -> result.addAll(filterFiles(files, regex)));
+    return result;
+  }
+
+  public List<File> filterFiles(List<File> files, String regex)
+  {
+    Pattern pattern = Pattern.compile(regex);
+    return files.stream().filter(file -> !pattern.matcher(file.getName()).matches()).collect(Collectors.toList());
   }
 }
