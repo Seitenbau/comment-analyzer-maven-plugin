@@ -3,8 +3,6 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_ba588a873fad_key -iv $encrypted_ba588a873fad_iv
   -in all.gpg.enc -out all.gpg -d
 - gpg --import all.gpg
-- echo "<settings><servers><server><id>ossrh</id><username>\${env.OSSRH_USER}</username><password>\${env.OSSRH_PASS}</password></server></servers><profiles><profile><id>sonatype-oss-release</id><properties><gpg.keyname>E22CF6BD97DF7042</gpg.keyname><gpg.passphrase>\${env.KEY_PASSPHRASE}</gpg.passphrase><gpg.secretKeyring>all.gpg</gpg.secretKeyring></properties></profile></profiles></settings>" > ~/settings.xml
-- cat ~/settings.xml
 stages:
   - name: build
     if: tag IS NOT present
@@ -14,7 +12,7 @@ jobs:
   include:
     - stage: deploy
       after_success:
-      - mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ~/settings.xml
+      - mvn deploy -Dgpg.passphrase='${env.KEY_PASSPHRASE}' -Prelease --settings ./travis-maven-settings.xml
     - stage: build
 cache:
   directories:

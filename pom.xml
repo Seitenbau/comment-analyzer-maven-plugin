@@ -7,7 +7,7 @@
     <groupId>com.github.seitenbau</groupId>
     <artifactId>comment-analyzer-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.1.12</version>
+    <version>0.1.13</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -122,6 +122,34 @@
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.7</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>readme-md</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                    <includes>
+                                        <include>README.md</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
         <pluginManagement>
@@ -181,24 +209,6 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.22.2</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <includes>
-                            <include>**/*IT.java</include>
-                        </includes>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
