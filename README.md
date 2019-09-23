@@ -20,7 +20,7 @@
       <plugin>
         <groupId>com.github.seitenbau</groupId>
         <artifactId>comment-analyzer-maven-plugin</artifactId>
-        <version>0.1.13</version>
+        <version>0.1.14</version>
         <executions>
           <execution>
             <goals>
