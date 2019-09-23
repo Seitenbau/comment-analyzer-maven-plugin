@@ -1,6 +1,6 @@
 
 
-## Parameters / configuration
+## Parameters / configuration [![Build Status](https://travis-ci.org/Seitenbau/comment-analyzer-maven-plugin.svg?branch=master)](https://travis-ci.org/Seitenbau/comment-analyzer-maven-plugin)
 
 * checkTag -> tag for scanning comments in files (default=DEBT)
 * dirToCheck -> directory for scanning files (default=./)
