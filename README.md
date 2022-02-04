@@ -1,10 +1,4 @@
-Maven Plugin that searches for comments with the configured tags in the
-projects source code and generates an HTML page with the found results.
 
-The main usage of this plugin is to search for code that are marked as (technical) debt via code comments.
-
-Currently, the plugin supports java code and will analyze line and block comments
-on classes, methods and in method bodies.
 
 ## Parameters / configuration [![Build Status](https://travis-ci.org/Seitenbau/comment-analyzer-maven-plugin.svg?branch=master)](https://travis-ci.org/Seitenbau/comment-analyzer-maven-plugin)
 
@@ -28,7 +22,7 @@ on classes, methods and in method bodies.
       <plugin>
         <groupId>com.github.seitenbau</groupId>
         <artifactId>comment-analyzer-maven-plugin</artifactId>
-        <version>0.1.15</version>
+        <version>0.1.16</version>
         <configuration>
             <dirToCheck>./</dirToCheck>
             <htmlResultPath>generated.html</htmlResultPath>
